@@ -4,7 +4,7 @@ package version
 import "fmt"
 
 const (
-	Major    int = 1 // The major version number
+	Major    int = 0 // The major version number
 	Minor    int = 0 // The minor version number
 	Revision int = 0 // The revision number
 )

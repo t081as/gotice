@@ -1,2 +1,4 @@
+github.com/magefile/mage v1.15.0 h1:BvGheCMAsG3bWUDbZ8AyXXpCNwU9u5CB6sM+HNb9HYg=
+github.com/magefile/mage v1.15.0/go.mod h1:z5UZb/iS3GoOSn0JgWuiw7dxlurVYTu+/jHXqQg881A=
 pkg.tk-software.de/spartan v1.1.0 h1:JNh29chsQ2jeejvP3VyyTAyGseVae6O7UewKjOa3L9s=
 pkg.tk-software.de/spartan v1.1.0/go.mod h1:4lB2VyimBIuqhDec+9I90e8i9OEtcleUrVvgKe7VsHE=

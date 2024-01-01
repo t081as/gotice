@@ -1,4 +1,4 @@
-// Package version provides the application version
+// Package version provides the application version.
 package version
 
 import "fmt"

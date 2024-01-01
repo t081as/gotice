@@ -24,7 +24,9 @@ func Build() error {
 			return err
 		}
 
-		sh.Copy(filepath.Join(t.OutPath(), "README.txt"), "README.md")
+		if err := sh.Copy(filepath.Join(t.OutPath(), "README.txt"), "README.md"); err != nil {
+			return err
+		}
 	}
 
 	return nil

@@ -27,6 +27,10 @@ func Build() error {
 		if err := sh.Copy(filepath.Join(t.OutPath(), "README.txt"), "README.md"); err != nil {
 			return err
 		}
+
+		if err := sh.Copy(filepath.Join(t.OutPath(), "LICENSE.txt"), "LICENSE"); err != nil {
+			return err
+		}
 	}
 
 	return nil

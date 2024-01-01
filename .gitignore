@@ -12,7 +12,7 @@
 *.test
 
 # Test result file
-unit-tests.xml
+tests.xml
 
 # Output of the go coverage tool
 *.out

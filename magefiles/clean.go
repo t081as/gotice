@@ -3,6 +3,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"pkg.tk-software.de/spartan/io/file"
@@ -10,6 +11,8 @@ import (
 
 // Clean removes all build articafts.
 func Clean() error {
+	fmt.Println("Executing: Clean")
+
 	if err := os.RemoveAll("./dist"); err != nil {
 		return err
 	}

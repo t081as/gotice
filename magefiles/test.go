@@ -25,5 +25,5 @@ func Test() error {
 		}
 	}
 
-	return sh.RunV("go", "tool", "cover", "-func coverage.out")
+	return sh.RunV("go", "tool", "cover", "-func", "coverage.out")
 }

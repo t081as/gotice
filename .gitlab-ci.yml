@@ -1,0 +1,24 @@
+image: golang:1.21
+
+stages:
+    - test
+
+before_script:
+    - go get -d github.com/magefile/mage
+    - go run $GOPATH/src/github.com/magefile/mage/bootstrap.go install
+
+lint:
+    stage: test
+    script:
+        - mage lint
+
+unit_tests:
+    stage: test
+    script:
+        - mage test
+    coverage: /total:\s+\(statements\)\s+(\d+\.\d+)%/
+    artifacts:
+        name: "${CI_PROJECT_NAME}-${CI_COMMIT_TAG}"
+        reports:
+            junit:
+                - 'tests.xml'

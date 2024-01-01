@@ -30,8 +30,3 @@ func buildNum() string {
 
 	return "0"
 }
-
-// isCI returns a value indicating whether the script is currently executed in a CI environment.
-func isCI() bool {
-	return os.Getenv("CI") != ""
-}

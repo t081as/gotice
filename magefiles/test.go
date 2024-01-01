@@ -4,6 +4,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/magefile/mage/sh"
 )
@@ -26,4 +27,9 @@ func Test() error {
 	}
 
 	return sh.RunV("go", "tool", "cover", "-func", "coverage.out")
+}
+
+// isCI returns a value indicating whether the script is currently executed in a CI environment.
+func isCI() bool {
+	return os.Getenv("CI") != ""
 }

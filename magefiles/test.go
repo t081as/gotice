@@ -15,7 +15,7 @@ const TestSumVersion string = "v1.11.0"
 func Test() error {
 	if isCI() {
 		fmt.Println("Executing: Test (CI)")
-		if err := sh.RunV("go", "run", "gotest.tools/gotestsum@"+TestSumVersion, "--junitfile tests.xml", "--packages=\"./...\"", "--", "-coverprofile=coverage.out"); err != nil {
+		if err := sh.RunV("go", "run", "gotest.tools/gotestsum@"+TestSumVersion, "--junitfile", "tests.xml", "--packages=./...", "--", "-coverprofile", "coverage.out"); err != nil {
 			return err
 		}
 	} else {

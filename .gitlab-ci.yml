@@ -4,8 +4,9 @@ stages:
     - test
 
 before_script:
-    - go get -d github.com/magefile/mage
-    - go run $GOPATH/src/github.com/magefile/mage/bootstrap.go install
+    - git clone git@github.com:magefile/mage
+    - cd mage
+    - go run bootstrap.go install
 
 lint:
     stage: test

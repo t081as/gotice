@@ -23,7 +23,7 @@ func Package() error {
 		zipf := fmt.Sprintf("%s-%s-%s-%d.%d.%d", AppName, t.Os, t.Arch, version.Major, version.Minor, version.Revision)
 		dir := t.OutPath()
 
-		fmt.Println("Packaging:", zipf, "source:", dir)
+		fmt.Println("Packaging:", zipf, "; source:", dir)
 
 		files, err := os.ReadDir(dir)
 		if err != nil {

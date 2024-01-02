@@ -12,6 +12,8 @@ import (
 
 // Build builds the application.
 func Build() error {
+	fmt.Println("Executing: Build")
+
 	for _, t := range Targets {
 		env := make(map[string]string)
 		env["GOOS"] = t.Os

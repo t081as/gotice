@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 
 	"pkg.tk-software.de/gotice/module"
+	"pkg.tk-software.de/gotice/notice"
 	"pkg.tk-software.de/spartan/io/file"
 )
 
@@ -22,13 +23,13 @@ func main() {
 
 	if *help {
 		flag.Usage()
-		return
+		os.Exit(0)
 	}
 
 	if flag.NArg() != 2 {
-		fmt.Fprintf(os.Stderr, "ERROR: Missing command line arguments\n")
-		fmt.Fprintf(os.Stderr, "Use %s --help\n", os.Args[0])
-		return
+		fmt.Fprint(os.Stderr, "ERROR: Missing command line arguments\n")
+		fmt.Fprint(os.Stderr, "Use gotice --help\n")
+		os.Exit(1)
 	}
 
 	src := flag.Arg(0)
@@ -37,24 +38,50 @@ func main() {
 
 	if !file.Exists(modf) {
 		fmt.Fprintf(os.Stderr, "ERROR: file %s not found\n", modf)
-		return
+		os.Exit(1)
 	}
 
+	fmt.Println("Reading module file:", modf)
 	mods, err := module.NewFromGoModule(src)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: unable to parse %s: %s\n", modf, err)
-		return
+		os.Exit(1)
 	}
 
-	fmt.Println("Project directory:", src)
-	fmt.Println("Destination file:", dst)
-	fmt.Println("Dependencies:", len(*mods))
+	var ns []notice.Notice
+
+	for _, mod := range *mods {
+		n := notice.New()
+		n.Path = mod.Path
+		n.Version = mod.Version
+
+		fmt.Println("Reading required module:", n.Path, n.Version)
+
+		lt, err := notice.GetLicenseText(n.Path, n.Version)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "ERROR: unable to detect license text of %s@%s: %s\n", n.Path, n.Version, err)
+			os.Exit(1)
+		}
+		n.LicenseText = lt
+
+		ns = append(ns, *n)
+	}
+
+	fmt.Println("Writing output file", dst)
+	f, err := os.OpenFile(dst, os.O_CREATE, 666)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "ERROR: unable to open output file %s: %s\n", dst, err)
+		os.Exit(1)
+	}
+	defer f.Close()
+
+	notice.Write(f, notice.TextTemplate, ns)
 }
 
 func usage() {
 	flag.CommandLine.SetOutput(os.Stdout)
 
-	fmt.Printf("Usage: %s [flags] [project dir] [output file]\n", os.Args[0])
+	fmt.Print("Usage: gotice [flags] [project dir] [output file]\n")
 	fmt.Print("Flags:\n")
 	flag.PrintDefaults()
 }

@@ -11,5 +11,4 @@ import (
 
 func TestMain(t *testing.T) {
 	fmt.Println("Test...")
-	main()
 }

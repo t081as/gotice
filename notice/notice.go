@@ -44,7 +44,7 @@ func New() *Notice {
 	}
 }
 
-// GetLicenseText reads the license text of the go module defined the given
+// GetLicenseText reads the license text of the go module defined by the given
 // module path and module version.
 func GetLicenseText(modpath, modversion string) (string, error) {
 	gopath, ok := os.LookupEnv("GOPATH")

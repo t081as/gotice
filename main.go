@@ -70,12 +70,15 @@ func main() {
 	fmt.Println("Writing output file", dst)
 	f, err := os.OpenFile(dst, os.O_CREATE, 666)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "ERROR: unable to open output file %s: %s\n", dst, err)
+		fmt.Fprintf(os.Stderr, "ERROR: unable to open notice file %s: %s\n", dst, err)
 		os.Exit(1)
 	}
 	defer f.Close()
 
-	notice.Write(f, notice.TextTemplate, ns)
+	if err := notice.Write(f, notice.TextTemplate, ns); err != nil {
+		fmt.Fprintf(os.Stderr, "ERROR: unable to write notice file\n")
+		os.Exit(1)
+	}
 }
 
 func usage() {

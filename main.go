@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"pkg.tk-software.de/gomod"
+	"pkg.tk-software.de/gotice/module"
 	"pkg.tk-software.de/spartan/io/file"
 )
 
@@ -40,7 +40,7 @@ func main() {
 		return
 	}
 
-	mod, err := gomod.NewFromDir(src)
+	mods, err := module.NewFromGoModule(src)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "ERROR: unable to parse %s: %s\n", modf, err)
 		return
@@ -48,7 +48,7 @@ func main() {
 
 	fmt.Println("Project directory:", src)
 	fmt.Println("Destination file:", dst)
-	fmt.Println("Project:", mod.Module.Path)
+	fmt.Println("Dependencies:", len(*mods))
 }
 
 func usage() {

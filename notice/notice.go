@@ -25,6 +25,7 @@ var (
 var LicenseFiles = [...]string{
 	"LICENSE",
 	"LICENSE.txt",
+	"LICENSE.md",
 }
 
 // Notice encapsulates license and copyright information of a single go module.

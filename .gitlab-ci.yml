@@ -1,0 +1,59 @@
+image: golang:1.21
+
+stages:
+    - test
+    - build
+
+before_script:
+    - git clone https://github.com/magefile/mage.git
+    - cd mage
+    - go run bootstrap.go install
+    - cd $CI_PROJECT_DIR
+
+lint:
+    stage: test
+    script:
+        - mage lint
+
+tests:
+    stage: test
+    script:
+        - mage test
+    coverage: /total:\s+\(statements\)\s+(\d+\.\d+)%/
+    artifacts:
+        name: "${CI_PROJECT_NAME}-${CI_COMMIT_TAG}"
+        reports:
+            junit:
+                - 'tests.xml'
+
+release:
+    stage: build
+    only:
+        - tags
+    artifacts:
+        name: "${CI_PROJECT_NAME}-${CI_COMMIT_TAG}"
+        paths:
+          - ./*.zip
+          - ./*.tar.gz
+    script:
+        - mage package
+
+ci-release:
+    stage: build
+    only:
+        - main
+    except:
+        - tags
+    artifacts:
+        name: "${CI_PROJECT_NAME}-${CI_JOB_NAME}-${CI_COMMIT_SHA}"
+        expire_in: 4 weeks
+        paths:
+          - ./*.zip
+          - ./*.tar.gz
+    script:
+        - mage package
+    
+ci-debug:
+    stage: build
+    script:
+        - mage build

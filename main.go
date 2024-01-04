@@ -9,13 +9,16 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	"pkg.tk-software.de/gotice/module"
 	"pkg.tk-software.de/gotice/notice"
+	"pkg.tk-software.de/gotice/version"
 	"pkg.tk-software.de/spartan/io/file"
 )
 
 var help *bool = flag.Bool("help", false, "Displays the command line help")
+var ver *bool = flag.Bool("version", false, "Displays the application version")
 
 func main() {
 	flag.Usage = usage
@@ -23,6 +26,19 @@ func main() {
 
 	if *help {
 		flag.Usage()
+		os.Exit(0)
+	}
+
+	if *ver {
+		var v string
+		if version.Build != "" {
+			v = version.Long()
+		} else {
+			v = version.Short()
+		}
+
+		fmt.Printf("gotice version %s (%s/%s)\n", v, runtime.GOOS, runtime.GOARCH)
+		fmt.Println()
 		os.Exit(0)
 	}
 

@@ -75,7 +75,7 @@ func (g *GenerateCommand) Run() error {
 
 		lt, err := notice.GetLicenseText(n.Path, n.Version)
 		if err != nil {
-			fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
+			return fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
 		}
 		n.LicenseText = lt
 
@@ -84,12 +84,12 @@ func (g *GenerateCommand) Run() error {
 
 	f, err := os.OpenFile(g.dstf, os.O_CREATE, 0666)
 	if err != nil {
-		fmt.Errorf("unable to open notice file %s: %w", g.dstf, err)
+		return fmt.Errorf("unable to open notice file %s: %w", g.dstf, err)
 	}
 	defer f.Close()
 
 	if err := notice.Write(f, notice.TextTemplate, ns); err != nil {
-		fmt.Errorf("unable to write notice file")
+		return fmt.Errorf("unable to write notice file")
 	}
 
 	return nil

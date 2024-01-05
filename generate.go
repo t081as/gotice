@@ -42,7 +42,9 @@ func (g *GenerateCommand) Name() string {
 
 // Init initializes the subcommand with the given command line arguments.
 func (g *GenerateCommand) Init(args []string) error {
-	g.fs.Parse(args)
+	if err := g.fs.Parse(args); err != nil {
+		return err
+	}
 
 	if g.fs.NArg() < 2 {
 		return ErrMissingArguments

@@ -7,5 +7,6 @@ package main
 import "errors"
 
 var (
-	ErrMissingArguments = errors.New("missing command line arguments")
+	ErrMissingSubcommand = errors.New("missing subcommand")
+	ErrMissingArguments  = errors.New("missing command line arguments")
 )

@@ -4,6 +4,12 @@
 
 package main
 
+import "errors"
+
+var (
+	ErrMissingArguments = errors.New("missing command line arguments")
+)
+
 // Runner should be satisfied by any type that will act as a command
 // line application subcommand.
 type Runner interface {

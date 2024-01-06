@@ -92,7 +92,7 @@ func (g *GenerateCommand) Run() error {
 	defer f.Close()
 
 	if err := notice.Write(f, notice.TextTemplate, ns); err != nil {
-		return fmt.Errorf("unable to write notice file")
+		return fmt.Errorf("unable to write notice file %s: %w", g.dstf, err)
 	}
 
 	return nil

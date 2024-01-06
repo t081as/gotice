@@ -56,6 +56,7 @@ func (g *GenerateCommand) Init(args []string) error {
 	return nil
 }
 
+// Run executes the subcommand.
 func (g *GenerateCommand) Run() error {
 	modf := filepath.Join(g.srcd, "go.mod")
 

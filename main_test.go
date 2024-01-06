@@ -9,6 +9,17 @@ import (
 	"testing"
 )
 
+func TestExec(t *testing.T) {
+	args := []string{
+		"param0",
+		"version",
+	}
+
+	if err := exec(args); err != nil {
+		t.Errorf("Expected no error, got %s", err)
+	}
+}
+
 func TestExecNoSubcommand(t *testing.T) {
 	args := []string{
 		"param0",

@@ -5,10 +5,27 @@
 package main
 
 import (
-	"fmt"
+	"errors"
 	"testing"
 )
 
-func TestMain(t *testing.T) {
-	fmt.Println("Test...")
+func TestExecNoSubcommand(t *testing.T) {
+	args := []string{
+		"param0",
+	}
+
+	if err := exec(args); !errors.Is(err, ErrMissingSubcommand) {
+		t.Errorf("Expected error %s, got %s", ErrMissingSubcommand, err)
+	}
+}
+
+func TestExecUnknownSubcommand(t *testing.T) {
+	args := []string{
+		"param0",
+		"unknown-command",
+	}
+
+	if err := exec(args); err == nil {
+		t.Errorf("Expected error, got none")
+	}
 }

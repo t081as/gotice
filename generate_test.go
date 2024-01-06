@@ -10,7 +10,7 @@ func TestGenerateCommand(t *testing.T) {
 	args := []string{
 		"param0",
 		"generate",
-		"./",
+		"./", // detects the gotice project
 		"./NOTICE.txt",
 	}
 

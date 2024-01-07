@@ -10,6 +10,9 @@ type Runner interface {
 	// Name returns the name of the subcommand.
 	Name() string
 
+	// Description returns the description of the subcommand.
+	Description() string
+
 	// Init initializes the subcommand with the given command line arguments.
 	Init(args []string) error
 

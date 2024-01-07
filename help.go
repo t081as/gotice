@@ -32,6 +32,11 @@ func (h *HelpCommand) Name() string {
 	return h.fs.Name()
 }
 
+// Description returns the description of the subcommand.
+func (h *HelpCommand) Description() string {
+	return "Displays the command line help"
+}
+
 // Init initializes the subcommand with the given command line arguments.
 func (h *HelpCommand) Init(args []string) error {
 	if err := h.fs.Parse(args); err != nil {

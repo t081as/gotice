@@ -40,6 +40,11 @@ func (g *GenerateCommand) Name() string {
 	return g.fs.Name()
 }
 
+// Description returns the description of the subcommand.
+func (g *GenerateCommand) Description() string {
+	return "Generates a notice file"
+}
+
 // Init initializes the subcommand with the given command line arguments.
 func (g *GenerateCommand) Init(args []string) error {
 	if err := g.fs.Parse(args); err != nil {

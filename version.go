@@ -27,25 +27,30 @@ func NewVersionCommand() *VersionCommand {
 }
 
 // Name returns the name of the subcommand.
-func (g *VersionCommand) Name() string {
-	return g.fs.Name()
+func (v *VersionCommand) Name() string {
+	return v.fs.Name()
+}
+
+// Description returns the description of the subcommand.
+func (v *VersionCommand) Description() string {
+	return "Displays the application version"
 }
 
 // Init initializes the subcommand with the given command line arguments.
-func (g *VersionCommand) Init(args []string) error {
-	return g.fs.Parse(args)
+func (v *VersionCommand) Init(args []string) error {
+	return v.fs.Parse(args)
 }
 
 // Run executes the subcommand.
-func (g *VersionCommand) Run() error {
-	var v string
+func (v *VersionCommand) Run() error {
+	var ver string
 	if version.Build != "" {
-		v = version.Long()
+		ver = version.Long()
 	} else {
-		v = version.Short()
+		ver = version.Short()
 	}
 
-	fmt.Printf("gotice version %s (%s/%s)\n", v, runtime.GOOS, runtime.GOARCH)
+	fmt.Printf("gotice version %s (%s/%s)\n", ver, runtime.GOOS, runtime.GOARCH)
 	fmt.Println()
 
 	return nil

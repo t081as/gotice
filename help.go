@@ -52,7 +52,20 @@ func (h *HelpCommand) Init(args []string) error {
 
 // Run executes the subcommand.
 func (h *HelpCommand) Run() error {
-	fmt.Println("Help!")
+	if h.topic == "" {
+		fmt.Println("Usage: gotice [command]")
+		fmt.Println()
+		fmt.Println("Commands:")
+
+		for _, c := range commands {
+			fmt.Printf("  %-10s%s\n", c.Name(), c.Description())
+		}
+
+		fmt.Println()
+		fmt.Println("Use `gotice help [command]` for further information")
+
+		return nil
+	}
 
 	return nil
 }

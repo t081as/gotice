@@ -9,15 +9,16 @@ import (
 	"os"
 )
 
+// The available subcommands.
+var commands = []Runner{
+	NewGenerateCommand(),
+	NewVersionCommand(),
+	NewHelpCommand(),
+}
+
 func exec(args []string) error {
 	if len(args) < 2 {
 		return ErrMissingSubcommand
-	}
-
-	commands := []Runner{
-		NewGenerateCommand(),
-		NewVersionCommand(),
-		NewHelpCommand(),
 	}
 
 	subcommand := args[1]

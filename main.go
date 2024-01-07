@@ -17,6 +17,7 @@ func exec(args []string) error {
 	commands := []Runner{
 		NewGenerateCommand(),
 		NewVersionCommand(),
+		NewHelpCommand(),
 	}
 
 	subcommand := args[1]

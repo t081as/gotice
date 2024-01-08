@@ -61,6 +61,13 @@ func (g *GenerateCommand) Init(args []string) error {
 	return nil
 }
 
+// Usage prints a usage message documenting the subcommand.
+func (g *GenerateCommand) Usage() {
+	fmt.Println("Usage: gotice generate [project dir] [output file]")
+	fmt.Println(g.Description())
+	fmt.Println()
+}
+
 // Run executes the subcommand.
 func (g *GenerateCommand) Run() error {
 	modf := filepath.Join(g.srcd, "go.mod")

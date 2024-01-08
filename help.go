@@ -50,6 +50,13 @@ func (h *HelpCommand) Init(args []string) error {
 	return nil
 }
 
+// Usage prints a usage message documenting the subcommand.
+func (h *HelpCommand) Usage() {
+	fmt.Println("Usage: gotice help")
+	fmt.Println(h.Description())
+	fmt.Println()
+}
+
 // Run executes the subcommand.
 func (h *HelpCommand) Run() error {
 	if h.topic == "" {

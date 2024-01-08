@@ -41,6 +41,13 @@ func (v *VersionCommand) Init(args []string) error {
 	return v.fs.Parse(args)
 }
 
+// Usage prints a usage message documenting the subcommand.
+func (v *VersionCommand) Usage() {
+	fmt.Println("Usage: gotice version")
+	fmt.Println(v.Description())
+	fmt.Println()
+}
+
 // Run executes the subcommand.
 func (v *VersionCommand) Run() error {
 	var ver string

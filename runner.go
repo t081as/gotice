@@ -13,6 +13,9 @@ type Runner interface {
 	// Description returns the description of the subcommand.
 	Description() string
 
+	// Usage prints a usage message documenting the subcommand.
+	Usage() string
+
 	// Init initializes the subcommand with the given command line arguments.
 	Init(args []string) error
 

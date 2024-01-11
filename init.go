@@ -7,6 +7,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"path/filepath"
+
+	"pkg.tk-software.de/gotice/notice"
+	"pkg.tk-software.de/spartan/io/file"
 )
 
 // HelpCommand implements the subcommand `init`.
@@ -47,5 +52,28 @@ func (i *InitCommand) Usage() {
 
 // Run executes the subcommand.
 func (h *InitCommand) Run() error {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	fn := filepath.Join(cwd, notice.OptionsFileName)
+	fmt.Printf("Creating file %s...\n", fn)
+
+	if file.Exists(fn) {
+		return fmt.Errorf("file %s already exists", fn)
+	}
+
+	f, err := os.Create(fn)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	opt := notice.NewOptions()
+	if err := notice.WriteOptions(f, opt); err != nil {
+		return err
+	}
+
 	return nil
 }

@@ -9,6 +9,8 @@ import (
 	"io"
 )
 
+const OptionsFileName string = ".gotice.json" // the default filename of the notice options file
+
 // Options represents options for generating a notice file.
 type Options struct {
 	Template string `json:"template"` // the template that shall be used

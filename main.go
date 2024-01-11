@@ -11,6 +11,7 @@ import (
 
 // The available subcommands.
 var commands = []Runner{
+	NewInitCommand(),
 	NewGenerateCommand(),
 	NewVersionCommand(),
 	NewHelpCommand(),

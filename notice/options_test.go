@@ -22,7 +22,7 @@ func TestReadWrite(t *testing.T) {
 		t.Fatalf("Writing options failed: %s", err)
 	}
 
-	if _, err := f.Seek(io.SeekStart, 0); err != nil {
+	if _, err := f.Seek(0, io.SeekStart); err != nil {
 		t.Fatalf("Seeking failed: %s", err)
 	}
 

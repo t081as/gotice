@@ -40,7 +40,7 @@ func (i *InitCommand) Init(args []string) error {
 
 // Usage prints a usage message documenting the subcommand.
 func (i *InitCommand) Usage() {
-	fmt.Println("Usage: gotice help")
+	fmt.Println("Usage: gotice init")
 	fmt.Println(i.Description())
 	fmt.Println()
 }

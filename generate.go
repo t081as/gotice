@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"pkg.tk-software.de/gotice/module"
 	"pkg.tk-software.de/gotice/notice"
@@ -81,16 +82,55 @@ func (g *GenerateCommand) Run() error {
 		return fmt.Errorf("unable to parse %s: %w", modf, err)
 	}
 
+	opt := readOptionsOrDefault()
+
 	ns, err := generateNotice(*mods)
 	if err != nil {
 		return err
 	}
 
-	if err := writeNotice(g.dstf, notice.TextTemplate, ns); err != nil {
+	var tmpl string
+	switch strings.ToLower(opt.Template) {
+	case "built-in:txt":
+		tmpl = notice.TextTemplate
+
+	case "built-in:md":
+		tmpl = notice.MarkdownTemplate
+
+	default:
+		return fmt.Errorf("unknown template %s", opt.Template)
+	}
+
+	if err := writeNotice(g.dstf, tmpl, ns); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+func readOptionsOrDefault() *notice.Options {
+	p, err := os.Getwd()
+	if err != nil {
+		return notice.NewOptions()
+	}
+
+	f := filepath.Join(p, notice.OptionsFileName)
+	if !file.Exists(f) {
+		return notice.NewOptions()
+	}
+
+	fh, err := os.Open(f)
+	if err != nil {
+		return notice.NewOptions()
+	}
+	defer fh.Close()
+
+	o, err := notice.ReadOptions(fh)
+	if err != nil {
+		return notice.NewOptions()
+	}
+
+	return o
 }
 
 func generateNotice(m module.Modules) ([]notice.Notice, error) {

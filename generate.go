@@ -81,20 +81,9 @@ func (g *GenerateCommand) Run() error {
 		return fmt.Errorf("unable to parse %s: %w", modf, err)
 	}
 
-	var ns []notice.Notice
-
-	for _, mod := range *mods {
-		n := notice.New()
-		n.Path = mod.Path
-		n.Version = mod.Version
-
-		lt, err := notice.GetLicenseText(n.Path, n.Version)
-		if err != nil {
-			return fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
-		}
-		n.LicenseText = lt
-
-		ns = append(ns, *n)
+	ns, err := generateNotice(*mods)
+	if err != nil {
+		return err
 	}
 
 	if err := writeNotice(g.dstf, notice.TextTemplate, ns); err != nil {
@@ -102,6 +91,26 @@ func (g *GenerateCommand) Run() error {
 	}
 
 	return nil
+}
+
+func generateNotice(m module.Modules) ([]notice.Notice, error) {
+	var ns []notice.Notice
+
+	for _, mod := range m {
+		n := notice.New()
+		n.Path = mod.Path
+		n.Version = mod.Version
+
+		lt, err := notice.GetLicenseText(n.Path, n.Version)
+		if err != nil {
+			return nil, fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
+		}
+		n.LicenseText = lt
+
+		ns = append(ns, *n)
+	}
+
+	return ns, nil
 }
 
 func writeNotice(f, tmpl string, n []notice.Notice) error {

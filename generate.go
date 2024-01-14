@@ -82,7 +82,7 @@ func (g *GenerateCommand) Run() error {
 		return fmt.Errorf("unable to parse %s: %w", modf, err)
 	}
 
-	opt := readOptionsOrDefault()
+	opt := readOptionsOrDefault(g.srcd)
 
 	ns, err := generateNotice(*mods)
 	if err != nil {
@@ -108,13 +108,8 @@ func (g *GenerateCommand) Run() error {
 	return nil
 }
 
-func readOptionsOrDefault() *notice.Options {
-	p, err := os.Getwd()
-	if err != nil {
-		return notice.NewOptions()
-	}
-
-	f := filepath.Join(p, notice.OptionsFileName)
+func readOptionsOrDefault(d string) *notice.Options {
+	f := filepath.Join(d, notice.OptionsFileName)
 	if !file.Exists(f) {
 		return notice.NewOptions()
 	}

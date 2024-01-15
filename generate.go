@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"pkg.tk-software.de/gotice/module"
 	"pkg.tk-software.de/gotice/notice"
@@ -81,30 +82,81 @@ func (g *GenerateCommand) Run() error {
 		return fmt.Errorf("unable to parse %s: %w", modf, err)
 	}
 
+	opt := readOptionsOrDefault(g.srcd)
+
+	ns, err := generateNotice(*mods)
+	if err != nil {
+		return err
+	}
+
+	var tmpl string
+	switch strings.ToLower(opt.Template) {
+	case "built-in:txt":
+		tmpl = notice.TextTemplate
+
+	case "built-in:md":
+		tmpl = notice.MarkdownTemplate
+
+	default:
+		return fmt.Errorf("unknown template %s", opt.Template)
+	}
+
+	if err := writeNotice(g.dstf, tmpl, ns); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func readOptionsOrDefault(d string) *notice.Options {
+	f := filepath.Join(d, notice.OptionsFileName)
+	if !file.Exists(f) {
+		return notice.NewOptions()
+	}
+
+	fh, err := os.Open(f)
+	if err != nil {
+		return notice.NewOptions()
+	}
+	defer fh.Close()
+
+	o, err := notice.ReadOptions(fh)
+	if err != nil {
+		return notice.NewOptions()
+	}
+
+	return o
+}
+
+func generateNotice(m module.Modules) ([]notice.Notice, error) {
 	var ns []notice.Notice
 
-	for _, mod := range *mods {
+	for _, mod := range m {
 		n := notice.New()
 		n.Path = mod.Path
 		n.Version = mod.Version
 
 		lt, err := notice.GetLicenseText(n.Path, n.Version)
 		if err != nil {
-			return fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
+			return nil, fmt.Errorf("unable to detect license text of %s@%s: %w", n.Path, n.Version, err)
 		}
 		n.LicenseText = lt
 
 		ns = append(ns, *n)
 	}
 
-	f, err := os.OpenFile(g.dstf, os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		return fmt.Errorf("unable to open notice file %s: %w", g.dstf, err)
-	}
-	defer f.Close()
+	return ns, nil
+}
 
-	if err := notice.Write(f, notice.TextTemplate, ns); err != nil {
-		return fmt.Errorf("unable to write notice file %s: %w", g.dstf, err)
+func writeNotice(f, tmpl string, n []notice.Notice) error {
+	of, err := os.OpenFile(f, os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		return fmt.Errorf("unable to open notice file %s: %w", f, err)
+	}
+	defer of.Close()
+
+	if err := notice.Write(of, tmpl, n); err != nil {
+		return fmt.Errorf("unable to write notice file %s: %w", f, err)
 	}
 
 	return nil

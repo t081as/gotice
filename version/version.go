@@ -9,7 +9,7 @@ import "fmt"
 
 const (
 	Major    int = 0 // The major version number
-	Minor    int = 2 // The minor version number
+	Minor    int = 3 // The minor version number
 	Revision int = 0 // The revision number
 )
 

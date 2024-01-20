@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added html template
+
 ## 0.3.0 - 2024-01-17
 - Added markdown template
 - Added `init` subcommand

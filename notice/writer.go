@@ -16,6 +16,9 @@ var TextTemplate string // the build-in text template
 //go:embed md.tmpl
 var MarkdownTemplate string // the build-in markdown template
 
+//go:embed html.tmpl
+var HtmlTemplate string // the build-in html template
+
 // Write generates the notice file and writes it to w using the template tmpl.
 func Write(w io.Writer, tmpl string, n []Notice) error {
 	template, err := template.New("notice").Parse(tmpl)

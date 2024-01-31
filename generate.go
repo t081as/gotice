@@ -97,6 +97,9 @@ func (g *GenerateCommand) Run() error {
 	case "built-in:md":
 		tmpl = notice.MarkdownTemplate
 
+	case "built-in:html":
+		tmpl = notice.HtmlTemplate
+
 	default:
 		return fmt.Errorf("unknown template %s", opt.Template)
 	}

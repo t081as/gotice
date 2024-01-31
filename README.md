@@ -56,6 +56,7 @@ Supported values:
 
 - **built-in:txt**: the build-in text template (default)
 - **built-in:md**: the build-in markdown template
+- **built-in:html:** the built-in html template
 
 ## Contributing
 see [CONTRIBUTING.md](CONTRIBUTING.md)

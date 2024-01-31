@@ -11,13 +11,13 @@ import (
 )
 
 //go:embed txt.tmpl
-var TextTemplate string // the build-in text template
+var TextTemplate string // the built-in text template
 
 //go:embed md.tmpl
-var MarkdownTemplate string // the build-in markdown template
+var MarkdownTemplate string // the built-in markdown template
 
 //go:embed html.tmpl
-var HtmlTemplate string // the build-in html template
+var HtmlTemplate string // the built-in html template
 
 // Write generates the notice file and writes it to w using the template tmpl.
 func Write(w io.Writer, tmpl string, n []Notice) error {

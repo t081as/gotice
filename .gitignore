@@ -17,6 +17,9 @@ dist/
 # Test result file
 tests.xml
 
+# Test output
+NOTICE.*
+
 # Output of the go coverage tool
 *.out
 coverage.html

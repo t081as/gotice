@@ -35,7 +35,7 @@ func (r Rendering) String() string {
 	return RenderingName[uint(r)]
 }
 
-// ParseRendering returns a ParseRendering based on the string s.
+// ParseRendering returns a Rendering based on the string s.
 func ParseRendering(s string) (Rendering, error) {
 	s = strings.TrimSpace(strings.ToLower(s))
 	value, ok := RenderingValue[s]

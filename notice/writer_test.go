@@ -10,7 +10,7 @@ import (
 	"testing"
 )
 
-func TestWriter(t *testing.T) {
+func TestWriteText(t *testing.T) {
 	var b bytes.Buffer
 	n := []Notice{
 		{
@@ -25,7 +25,7 @@ func TestWriter(t *testing.T) {
 		},
 	}
 
-	if err := Write(&b, TextTemplate, n); err != nil {
+	if err := WriteText(&b, TextTemplate, n); err != nil {
 		t.Fatalf("Expected no error, got %v", err)
 	}
 

@@ -15,7 +15,7 @@ const (
 	Html                      // Rendering via html/template
 )
 
-// Rendering represents the tyoe of output rendering.
+// Rendering represents the type of output rendering.
 type Rendering int
 
 var (

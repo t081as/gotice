@@ -13,13 +13,15 @@ const OptionsFileName string = ".gotice.json" // the default filename of the not
 
 // Options represents options for generating a notice file.
 type Options struct {
-	Template string `json:"template"` // the template that shall be used
+	Template  string    `json:"template"`  // the template that shall be used
+	Rendering Rendering `json:"rendering"` // the rendering that shall be used`
 }
 
 // NewOptions returns a new Options struct with default values.
 func NewOptions() *Options {
 	return &Options{
-		Template: "built-in:txt",
+		Template:  "built-in:txt",
+		Rendering: Text,
 	}
 }
 

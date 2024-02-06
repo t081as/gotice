@@ -74,5 +74,12 @@ func (h *HelpCommand) Run() error {
 		return nil
 	}
 
+	for _, c := range commands {
+		if c.Name() == h.topic {
+			c.Usage()
+			return nil
+		}
+	}
+
 	return nil
 }

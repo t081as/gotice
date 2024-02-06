@@ -97,11 +97,14 @@ func (g *GenerateCommand) Run() error {
 	case "built-in:md":
 		tmpl = notice.MarkdownTemplate
 
+	case "built-in:html":
+		tmpl = notice.HtmlTemplate
+
 	default:
 		return fmt.Errorf("unknown template %s", opt.Template)
 	}
 
-	if err := writeNotice(g.dstf, tmpl, ns); err != nil {
+	if err := writeNotice(g.dstf, tmpl, opt.Rendering, ns); err != nil {
 		return err
 	}
 
@@ -148,15 +151,26 @@ func generateNotice(m module.Modules) ([]notice.Notice, error) {
 	return ns, nil
 }
 
-func writeNotice(f, tmpl string, n []notice.Notice) error {
+func writeNotice(f, tmpl string, r notice.Rendering, n []notice.Notice) error {
 	of, err := os.OpenFile(f, os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return fmt.Errorf("unable to open notice file %s: %w", f, err)
 	}
 	defer of.Close()
 
-	if err := notice.Write(of, tmpl, n); err != nil {
-		return fmt.Errorf("unable to write notice file %s: %w", f, err)
+	switch r {
+	case notice.Text:
+		if err := notice.WriteText(of, tmpl, n); err != nil {
+			return fmt.Errorf("unable to write text notice file %s: %w", f, err)
+		}
+
+	case notice.Html:
+		if err := notice.WriteHtml(of, tmpl, n); err != nil {
+			return fmt.Errorf("unable to write html notice file %s: %w", f, err)
+		}
+
+	default:
+		return fmt.Errorf("invalid rendering %q", r)
 	}
 
 	return nil

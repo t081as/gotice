@@ -46,7 +46,8 @@ If there is a `.gotice.json` configuration file in the `./project1` directory it
 
 ```
 {
-    "template":"built-in:txt"
+    "template":"built-in:txt",
+    "rendering":"text"
 }
 ```
 
@@ -56,6 +57,14 @@ Supported values:
 
 - **built-in:txt**: the build-in text template (default)
 - **built-in:md**: the build-in markdown template
+- **built-in:html:** the built-in html template
+
+### rendering
+The rendering engine that shall be used to render the template file.
+Supported values:
+
+- **text**: uses  `text/template` (default)
+- **html**: uses `html/template`
 
 ## Contributing
 see [CONTRIBUTING.md](CONTRIBUTING.md)

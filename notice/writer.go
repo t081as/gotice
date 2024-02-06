@@ -6,19 +6,37 @@ package notice
 
 import (
 	_ "embed"
+	htmltmpl "html/template"
 	"io"
-	"text/template"
+	texttmpl "text/template"
 )
 
 //go:embed txt.tmpl
-var TextTemplate string // the build-in text template
+var TextTemplate string // the built-in text template
 
 //go:embed md.tmpl
-var MarkdownTemplate string // the build-in markdown template
+var MarkdownTemplate string // the built-in markdown template
 
-// Write generates the notice file and writes it to w using the template tmpl.
-func Write(w io.Writer, tmpl string, n []Notice) error {
-	template, err := template.New("notice").Parse(tmpl)
+//go:embed html.tmpl
+var HtmlTemplate string // the built-in html template
+
+// WriteText generates the notice file and writes it to w using the text template tmpl.
+func WriteText(w io.Writer, tmpl string, n []Notice) error {
+	template, err := texttmpl.New("notice").Parse(tmpl)
+	if err != nil {
+		return err
+	}
+
+	if err := template.Execute(w, n); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// WriteText generates the notice file and writes it to w using the html template tmpl.
+func WriteHtml(w io.Writer, tmpl string, n []Notice) error {
+	template, err := htmltmpl.New("notice").Parse(tmpl)
 	if err != nil {
 		return err
 	}

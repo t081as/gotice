@@ -14,7 +14,7 @@ import (
 	"pkg.tk-software.de/spartan/io/file"
 )
 
-// HelpCommand implements the subcommand `init`.
+// InitCommand implements the subcommand `init`.
 type InitCommand struct {
 	fs *flag.FlagSet
 }

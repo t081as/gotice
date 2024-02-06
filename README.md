@@ -59,6 +59,13 @@ Supported values:
 - **built-in:md**: the build-in markdown template
 - **built-in:html:** the built-in html template
 
+### rendering
+The rendering engine that shall be used to render the template file.
+Supported values:
+
+- **text**: uses  `text/template` (default)
+- **html**: uses `html/template`
+
 ## Contributing
 see [CONTRIBUTING.md](CONTRIBUTING.md)
 

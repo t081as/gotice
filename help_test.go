@@ -16,3 +16,15 @@ func TestHelpCommand(t *testing.T) {
 		t.Errorf("Expected no error, got %s", err)
 	}
 }
+
+func TestHelpCommandTopic(t *testing.T) {
+	args := []string{
+		"param0",
+		"help",
+		"init",
+	}
+
+	if err := exec(args); err != nil {
+		t.Errorf("Expected no error, got %s", err)
+	}
+}

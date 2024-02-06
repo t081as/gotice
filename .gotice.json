@@ -1,4 +1,1 @@
-{
-    "template":"built-in:html",
-    "Rendering":"html"
-}
+{"template":"built-in:txt","rendering":"text"}

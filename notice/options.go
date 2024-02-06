@@ -14,7 +14,7 @@ const OptionsFileName string = ".gotice.json" // the default filename of the not
 // Options represents options for generating a notice file.
 type Options struct {
 	Template  string    `json:"template"`  // the template that shall be used
-	Rendering Rendering `json:"Rendering"` // the rendering that shall be used`
+	Rendering Rendering `json:"rendering"` // the rendering that shall be used`
 }
 
 // NewOptions returns a new Options struct with default values.

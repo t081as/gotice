@@ -46,7 +46,8 @@ If there is a `.gotice.json` configuration file in the `./project1` directory it
 
 ```
 {
-    "template":"built-in:txt"
+    "template":"built-in:txt",
+    "rendering":"text"
 }
 ```
 

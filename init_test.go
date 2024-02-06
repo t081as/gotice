@@ -20,7 +20,9 @@ func TestInitCommand(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 
-	os.Chdir(tmpd)
+	if err := os.Chdir(tmpd); err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 
 	if err := exec(args); err != nil {
 		t.Errorf("Expected no error, got %s", err)

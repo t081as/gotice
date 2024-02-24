@@ -101,7 +101,19 @@ func (g *GenerateCommand) Run() error {
 		tmpl = notice.HtmlTemplate
 
 	default:
-		return fmt.Errorf("unknown template %s", opt.Template)
+		customTemplate := filepath.Join(g.srcd, opt.Template)
+
+		if !file.Exists(customTemplate) {
+			return fmt.Errorf("template %s not found", opt.Template)
+		}
+
+		d, err := os.ReadFile(customTemplate)
+		if err != nil {
+			return err
+		}
+
+		tmpl = string(d)
+
 	}
 
 	if err := writeNotice(g.dstf, tmpl, opt.Rendering, ns); err != nil {

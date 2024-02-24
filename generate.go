@@ -89,31 +89,9 @@ func (g *GenerateCommand) Run() error {
 		return err
 	}
 
-	var tmpl string
-	switch strings.ToLower(opt.Template) {
-	case "built-in:txt":
-		tmpl = notice.TextTemplate
-
-	case "built-in:md":
-		tmpl = notice.MarkdownTemplate
-
-	case "built-in:html":
-		tmpl = notice.HtmlTemplate
-
-	default:
-		customTemplate := filepath.Join(g.srcd, opt.Template)
-
-		if !file.Exists(customTemplate) {
-			return fmt.Errorf("template %s not found", opt.Template)
-		}
-
-		d, err := os.ReadFile(customTemplate)
-		if err != nil {
-			return err
-		}
-
-		tmpl = string(d)
-
+	tmpl, err := readTemplate(g.srcd, opt.Template)
+	if err != nil {
+		return err
 	}
 
 	if err := writeNotice(g.dstf, tmpl, opt.Rendering, ns); err != nil {
@@ -121,6 +99,33 @@ func (g *GenerateCommand) Run() error {
 	}
 
 	return nil
+}
+
+func readTemplate(dir, template string) (string, error) {
+	switch strings.ToLower(template) {
+	case "built-in:txt":
+		return notice.TextTemplate, nil
+
+	case "built-in:md":
+		return notice.MarkdownTemplate, nil
+
+	case "built-in:html":
+		return notice.HtmlTemplate, nil
+
+	default:
+		customTemplate := filepath.Join(dir, template)
+
+		if !file.Exists(customTemplate) {
+			return "", fmt.Errorf("template %s not found", template)
+		}
+
+		d, err := os.ReadFile(customTemplate)
+		if err != nil {
+			return "", err
+		}
+
+		return string(d), nil
+	}
 }
 
 func readOptionsOrDefault(d string) *notice.Options {

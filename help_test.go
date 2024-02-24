@@ -18,13 +18,21 @@ func TestHelpCommand(t *testing.T) {
 }
 
 func TestHelpCommandTopic(t *testing.T) {
-	args := []string{
-		"param0",
-		"help",
-		"init",
+	tests := []struct {
+		name string
+		args []string
+	}{
+		{"init-usage", []string{"param0", "help", "init"}},
+		{"generate-usage", []string{"param0", "help", "generate"}},
+		{"version-usage", []string{"param0", "help", "version"}},
+		{"help-usage", []string{"param0", "help", "help"}},
 	}
 
-	if err := exec(args); err != nil {
-		t.Errorf("Expected no error, got %s", err)
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if err := exec(test.args); err != nil {
+				t.Errorf("Expected no error, got %s", err)
+			}
+		})
 	}
 }

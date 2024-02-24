@@ -58,6 +58,24 @@ Supported values:
 - **built-in:txt**: the build-in text template (default)
 - **built-in:md**: the build-in markdown template
 - **built-in:html:** the built-in html template
+- **custom filename:** if a custom filename is provided gotice will try to locate the file in the project directory; relative paths are supported
+
+#### Example
+The following example shows a custom gotice template file:
+
+```
+NOTICES AND INFORMATION
+
+This software incorporates material from third parties listed below.
+
+{{range .}}-------------------------------------------------------------------
+{{ .Path }} {{ .Version}}
+
+{{ .LicenseText}}
+
+-------------------------------------------------------------------
+{{end}}
+```
 
 ### rendering
 The rendering engine that shall be used to render the template file.

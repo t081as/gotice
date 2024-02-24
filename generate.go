@@ -84,17 +84,25 @@ func (g *GenerateCommand) Run() error {
 
 	opt := readOptionsOrDefault(g.srcd)
 
-	ns, err := generateNotice(*mods)
+	if err := generate(*mods, *opt, g.srcd, g.dstf); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func generate(mods module.Modules, opt notice.Options, srcd, dstf string) error {
+	ns, err := generateNotice(mods)
 	if err != nil {
 		return err
 	}
 
-	tmpl, err := readTemplate(g.srcd, opt.Template)
+	tmpl, err := readTemplate(srcd, opt.Template)
 	if err != nil {
 		return err
 	}
 
-	if err := writeNotice(g.dstf, tmpl, opt.Rendering, ns); err != nil {
+	if err := writeNotice(dstf, tmpl, opt.Rendering, ns); err != nil {
 		return err
 	}
 

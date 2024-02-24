@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Added support for custom templates
+
 ## 0.4.0 - 2024-02-24
 - Added html template
 

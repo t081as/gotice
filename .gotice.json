@@ -1,4 +1,4 @@
 {
-    "template":"built-in:txt",
+    "template":".gotice.tmpl",
     "rendering":"text"
 }
